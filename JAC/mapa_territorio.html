@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa del territorio — JAC San Diego Sur</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  :root{--navy:#1A2F5A;--red:#E63946;--orange:#F4A522;--green:#7CB342;--blue:#2BA9E0;--mist:#f3f5f9;--line:#e2e7ef;--muted:#6b7688}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#fff;color:#1f2733}
+  .wrap{max-width:1200px;margin:0 auto;padding:32px 24px}
+  .head{margin-bottom:24px}
+  .kicker{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:8px}
+  h1{font-family:Georgia,serif;color:var(--navy);font-size:2rem;margin-bottom:8px}
+  .head p{color:var(--muted)}
+
+  .layout{display:grid;grid-template-columns:1fr 320px;gap:24px}
+  #map{height:560px;border-radius:16px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(26,47,90,.10);z-index:1}
+
+  .panel{background:var(--mist);border-radius:16px;padding:24px;height:fit-content}
+  .panel h3{font-family:Georgia,serif;color:var(--navy);font-size:1.1rem;margin-bottom:14px}
+  .legend-item{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:.88rem}
+  .swatch{width:18px;height:18px;border-radius:4px;flex-shrink:0}
+  .sw-poly{background:rgba(230,57,70,.25);border:2px solid var(--red)}
+  .sw-ref{background:var(--blue);border-radius:50%}
+  .sw-sede{background:var(--orange);border-radius:50%;border:2px dashed var(--navy)}
+
+  .limits{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+  .lrow{display:flex;gap:10px;margin-bottom:12px;font-size:.84rem}
+  .lrow b{color:var(--orange);min-width:70px;text-transform:uppercase;letter-spacing:.05em;font-size:.72rem;padding-top:2px}
+  .lrow p{color:#41506a}
+
+  .note{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:.8rem;color:var(--muted)}
+  .note b{color:var(--navy);display:block;margin-bottom:4px}
+
+  .pending{margin-top:14px;background:rgba(244,165,34,.12);border:1px dashed var(--orange);border-radius:10px;padding:14px;font-size:.82rem;color:#8a5f0a}
+  .pending b{display:block;color:var(--navy);margin-bottom:4px}
+
+  .leaflet-popup-content{font-family:'Segoe UI',sans-serif;font-size:.88rem}
+  .leaflet-popup-content b{color:var(--navy)}
+
+  @media(max-width:900px){.layout{grid-template-columns:1fr}#map{height:420px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="kicker">Nuestro territorio</div>
+    <h1>Radio de acción de la Junta</h1>
+    <p>Barrio San Diego · Comuna 10 — La Candelaria · Distrito de Medellín</p>
+  </div>
+
+  <div class="layout">
+    <div id="map"></div>
+
+    <div class="panel">
+      <h3>Convenciones</h3>
+      <div class="legend-item"><span class="swatch sw-poly"></span> Radio de acción de la JAC</div>
+      <div class="legend-item"><span class="swatch sw-ref"></span> Puntos de referencia</div>
+      <div class="legend-item"><span class="swatch sw-sede"></span> Sede de la Junta (pendiente)</div>
+
+      <div class="limits">
+        <h3 style="font-size:.95rem;margin-bottom:12px">Límites oficiales</h3>
+        <div class="lrow"><b>Norte</b><p>Carrera 43A con Calle 37 (Av. 33), al oriente hasta Av. Las Palmas.</p></div>
+        <div class="lrow"><b>Oriente</b><p>Av. Las Palmas hacia el sur hasta la Calle 26.</p></div>
+        <div class="lrow"><b>Sur</b><p>Desde Las Palmas con Calle 26 al occidente por las calles 27 y 28.</p></div>
+        <div class="lrow"><b>Occidente</b><p>Carrera 43A desde la Calle 28 hasta la Calle 37.</p></div>
+      </div>
+
+      <div class="pending">
+        <b>📍 Falta la sede</b>
+        Cuando la Junta entregue la dirección, se marca aquí el punto exacto con enlace a "Cómo llegar".
+      </div>
+
+      <div class="note">
+        <b>Sobre este mapa</b>
+        Trazado a partir de la descripción de límites de la constancia de la Secretaría de Participación Ciudadana (GeoMed 1020). Es una representación aproximada para orientación del visitante.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Centro aproximado del barrio San Diego, Comuna 10, Medellín
+  const map = L.map('map').setView([6.2262, -75.5672], 15);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  // Polígono del radio de acción — trazado según los límites descritos
+  // Norte: Cra 43A x Cl 37 (Av 33) → oriente hasta Av Las Palmas
+  // Oriente: Av Las Palmas → sur hasta Cl 26
+  // Sur: Cl 26 → occidente por Cl 27 y Cl 28 hasta Cra 43A
+  // Occidente: Cra 43A → norte hasta Cl 37
+  const poligono = [
+    [6.23230, -75.56990],  // Cra 43A x Cl 37 (Av 33) - esquina noroccidental
+    [6.23180, -75.56660],  // Cl 37 hacia el oriente
+    [6.23090, -75.56420],  // empalme con Av Las Palmas
+    [6.22940, -75.56230],  // Av Las Palmas hacia el sur
+    [6.22700, -75.56110],
+    [6.22450, -75.56070],
+    [6.22180, -75.56130],  // altura Cl 26
+    [6.22030, -75.56290],  // Cl 26 hacia el occidente
+    [6.22090, -75.56560],
+    [6.22230, -75.56780],  // Cl 27 - Cl 28
+    [6.22350, -75.56980],
+    [6.22440, -75.57080],  // Cl 28 x Cra 43A
+    [6.22720, -75.57050],  // Cra 43A hacia el norte
+    [6.22980, -75.57020],
+    [6.23230, -75.56990]   // cierre
+  ];
+
+  L.polygon(poligono, {
+    color: '#E63946',
+    weight: 3,
+    opacity: 0.9,
+    fillColor: '#E63946',
+    fillOpacity: 0.15,
+    dashArray: '8, 6'
+  }).addTo(map).bindPopup('<b>Radio de acción</b><br>JAC Barrio San Diego Sector Sur');
+
+  // Puntos de referencia dentro y en el borde del territorio
+  const refIcon = (color) => L.divIcon({
+    className: '',
+    html: `<div style="width:14px;height:14px;background:${color};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>`,
+    iconSize: [14,14],
+    iconAnchor: [7,7]
+  });
+
+  const referencias = [
+    { pos: [6.22850, -75.56680], nombre: 'Centro Comercial San Diego', tipo: 'Comercio' },
+    { pos: [6.22520, -75.57000], nombre: 'C.C. Premium Plaza', tipo: 'Comercio' },
+    { pos: [6.22690, -75.56830], nombre: 'Clínica Oftalmológica San Diego', tipo: 'Salud' },
+    { pos: [6.22580, -75.56600], nombre: 'Parroquia San Anselmo', tipo: 'Fe' },
+    { pos: [6.22300, -75.56350], nombre: 'Loma de San Julián', tipo: 'Referencia' }
+  ];
+
+  referencias.forEach(r => {
+    L.marker(r.pos, { icon: refIcon('#2BA9E0') })
+      .addTo(map)
+      .bindPopup(`<b>${r.nombre}</b><br><span style="color:#6b7688">${r.tipo}</span>`);
+  });
+
+  // Marcador de la sede — PENDIENTE (posición provisional en el centro)
+  const sedeIcon = L.divIcon({
+    className: '',
+    html: `<div style="width:34px;height:34px;background:#F4A522;border:3px dashed #1A2F5A;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 3px 10px rgba(0,0,0,.3)">📍</div>`,
+    iconSize: [34,34],
+    iconAnchor: [17,17]
+  });
+
+  L.marker([6.22620, -75.56720], { icon: sedeIcon, opacity: 0.85 })
+    .addTo(map)
+    .bindPopup('<b>Sede de la Junta</b><br><span style="color:#b5790f">Ubicación pendiente</span><br><small style="color:#6b7688">Se actualizará cuando la Junta entregue la dirección.</small>');
+
+  map.fitBounds(L.polygon(poligono).getBounds(), { padding: [30, 30] });
+</script>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <style>
 :root{--navy:#1A2F5A;--red:#E63946;--orange:#F4A522;--green:#7CB342;--blue:#2BA9E0}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,sans-serif;height:100vh;overflow:hidden}
-.portada{height:100vh;background:linear-gradient(135deg,var(--navy) 0%,#24406e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+body{font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+.portada{min-height:100vh;background:linear-gradient(135deg,var(--navy) 0%,#24406e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:56px 16px}
 .bar-top{position:absolute;top:0;left:0;width:100%;height:8px;display:flex}
 .bar-top span{flex:1}
 .logo-box{background:#fff;border-radius:28px;padding:40px;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:pop .8s ease}
@@ -52,7 +52,7 @@ p{color:#b9c6e0;margin-top:12px;font-size:clamp(.85rem,3.4vw,1.05rem);letter-spa
   <p>San Diego Sur · Medellín</p>
   <a href="r_territorio.html" class="enter">Entrar al sitio →</a>
 
-  <div style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:90%;max-width:640px;background:rgba(255,255,255,.95);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+  <div style="margin:44px auto 0;width:90%;max-width:640px;background:rgba(255,255,255,.95);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
     <div style="width:48px;height:48px;border-radius:10px;background:#f3f5f9;display:flex;align-items:center;justify-content:center;color:#9aa6ba;font-size:.62rem;flex-shrink:0">[ Logo ]</div>
     <div style="flex:1;min-width:0">
       <div style="font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#F4A522;font-weight:700">Espacio patrocinado</div>
