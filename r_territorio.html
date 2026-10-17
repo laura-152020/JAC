@@ -216,7 +216,7 @@
 </style><style>
 .geo3d{border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(26,47,90,.22);border:1px solid var(--line);background:var(--navy);position:relative;transition:transform .4s,box-shadow .4s}
 .geo3d:hover{transform:translateY(-5px);box-shadow:0 30px 70px rgba(26,47,90,.3)}
-.geo3d-inner{position:relative;height:480px}
+.geo3d-inner{position:relative}
 .geo-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .geo-map{position:relative;z-index:1;width:100%;height:100%;border:0;display:block}
 .geo-bar{display:flex;align-items:center;gap:8px;background:var(--navy);color:#cdd6e8;padding:12px 16px;font-size:.82rem;position:relative;z-index:2}
@@ -246,6 +246,13 @@
   nav.menu a{font-size:1.02rem}
   /* que los flotantes no tapen el menú abierto */
   nav.menu.open ~ .pwa-install,nav.menu.open ~ .wa-float{display:none}
+}
+</style>
+<style>
+.terr-grid{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.planos-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:820px){
+  .terr-grid,.planos-grid{grid-template-columns:1fr}
 }
 </style>
 </head><body><div class="topbar">
@@ -307,10 +314,10 @@
     <h2>Explora nuestro territorio</h2>
     <p>Mueve el mapa y haz zoom para ver los límites y los puntos de referencia del sector.</p>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 300px;gap:24px">
+  <div class="terr-grid">
     <div class="geo3d">
       <div class="geo3d-inner">
-        <img src="assets/mapa_satelital.jpg" alt="Vista satelital del territorio de San Diego Sur" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <img src="assets/mapa_satelital.jpg" alt="Vista satelital del territorio de San Diego Sur" style="width:100%;height:auto;display:block">
       </div>
       <div class="geo-bar"><span class="geo-dot"></span> Radio de acción aprobado · San Diego Sur · Comuna 10</div>
     </div>
@@ -341,13 +348,13 @@
 <!-- MAPAS OFICIALES -->
 <section class="block">
   <div class="sec-head"><div class="kicker">Documentos</div><h2>Planos oficiales</h2><p>Los mapas entregados por la Alcaldía de Medellín en la constancia de verificación del territorio.</p></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
+  <div class="planos-grid">
     <div style="border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 26px rgba(26,47,90,.10)">
-      <img src="assets/mapa_satelital.jpg" alt="Polígono oficial - vista satelital" style="width:100%;height:420px;object-fit:cover;object-position:center;display:block">
+      <img src="assets/mapa_satelital.jpg" alt="Polígono oficial - vista satelital" style="width:100%;height:auto;display:block">
       <div style="background:var(--navy);color:#cdd6e8;padding:14px 18px;font-size:.85rem"><b style="color:#fff;display:block;margin-bottom:2px">Polígono aprobado</b>Vista satelital con el polígono del radio de acción</div>
     </div>
     <div style="border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 26px rgba(26,47,90,.10)">
-      <img src="assets/mapa_calles.jpg" alt="Plano de límites" style="width:100%;height:420px;object-fit:cover;object-position:center;display:block">
+      <img src="assets/mapa_calles.jpg" alt="Plano de límites" style="width:100%;height:auto;display:block">
       <div style="background:var(--navy);color:#cdd6e8;padding:14px 18px;font-size:.85rem"><b style="color:#fff;display:block;margin-bottom:2px">Plano del sector</b>Plano con referencias: C.C. San Diego, Premium Plaza, Av. Las Palmas</div>
     </div>
   </div>
