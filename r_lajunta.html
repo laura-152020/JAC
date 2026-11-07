@@ -499,7 +499,10 @@
       <button type="button" id="docModalClose" aria-label="Cerrar">&#10005; Cerrar</button>
     </span>
   </div>
-  <iframe id="docModalFrame" title="Documento" src="about:blank"></iframe>
+  <div class="doc-modal-body" id="docModalBody">
+    <iframe id="docModalFrame" title="Documento" src="about:blank"></iframe>
+    <img id="docModalImg" alt="" hidden>
+  </div>
 </div>
 <style>
 .doc-modal{position:fixed;inset:0;z-index:99999;background:rgba(10,18,38,.92);display:flex;flex-direction:column}
@@ -510,19 +513,28 @@
 .doc-modal-actions a:hover{text-decoration:underline}
 .doc-modal-actions button{background:transparent;border:1px solid rgba(255,255,255,.45);color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:700}
 .doc-modal-actions button:hover{background:rgba(255,255,255,.15)}
-.doc-modal iframe{flex:1;width:100%;border:0;background:#fff}
+.doc-modal-body{flex:1;position:relative;overflow:auto;display:flex;align-items:center;justify-content:center;padding:18px}
+.doc-modal-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.doc-modal-body img{max-width:100%;max-height:100%;object-fit:contain;display:block;border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.45);cursor:zoom-out}
+.doc-modal-body img[hidden]{display:none}
 @media(max-width:600px){.doc-modal-bar{font-size:.8rem;padding:10px 12px}.doc-modal-actions{gap:8px}}
 </style>
 <script>
 (function(){
   var m=document.getElementById('docModal'); if(!m) return;
-  var f=document.getElementById('docModalFrame'),t=document.getElementById('docModalTitle'),dl=document.getElementById('docModalDl');
-  function openDoc(src,title){ dl.href=src; t.textContent=title||'Documento'; f.src=src; m.hidden=false; document.body.style.overflow='hidden'; }
-  function closeDoc(){ m.hidden=true; f.src='about:blank'; document.body.style.overflow=''; }
+  var f=document.getElementById('docModalFrame'),im=document.getElementById('docModalImg'),body=document.getElementById('docModalBody'),t=document.getElementById('docModalTitle'),dl=document.getElementById('docModalDl');
+  function isImg(s){ return /\.(jpe?g|png|gif|webp|svg)(\?|#|$)/i.test(s); }
+  function openDoc(src,title){
+    dl.href=src; t.textContent=title||'Documento';
+    if(isImg(src)){ f.src='about:blank'; f.hidden=true; im.src=src; im.hidden=false; }
+    else { im.hidden=true; im.removeAttribute('src'); f.hidden=false; f.src=src; }
+    m.hidden=false; document.body.style.overflow='hidden';
+  }
+  function closeDoc(){ m.hidden=true; f.src='about:blank'; im.removeAttribute('src'); document.body.style.overflow=''; }
   document.addEventListener('click',function(e){
     var a=e.target.closest('[data-doc]');
     if(a){ e.preventDefault(); openDoc(a.getAttribute('data-doc'), a.getAttribute('data-title')); return; }
-    if(e.target.closest('#docModalClose') || e.target===m){ closeDoc(); }
+    if(e.target.closest('#docModalClose') || e.target===m || e.target===body || e.target===im){ closeDoc(); }
   });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !m.hidden) closeDoc(); });
 })();
