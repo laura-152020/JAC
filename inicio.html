@@ -421,8 +421,11 @@
       </div>
     </div>
     <div class="map-reveal" style="border-radius:16px;overflow:hidden;box-shadow:0 14px 36px rgba(26,47,90,.16);border:1px solid var(--line)">
-      <img src="assets/mapa_limites.jpg" alt="Mapa del radio de acción de la JAC San Diego Sur" style="width:100%;display:block">
-      <div style="background:var(--navy);color:#cdd6e8;padding:12px 16px;font-size:.8rem">Radio de acción aprobado por la Secretaría de Participación Ciudadana · GeoMed 1020</div>
+      <img src="assets/mapa_calles.jpg" alt="Plano del sector — radio de acción de la JAC San Diego Sur" style="width:100%;display:block">
+      <div style="background:var(--navy);color:#cdd6e8;padding:14px 16px;font-size:.8rem;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+        <span>Radio de acción aprobado por la Secretaría de Participación Ciudadana · GeoMed 1020</span>
+        <a href="assets/mapa_calles.jpg" data-doc="assets/mapa_calles.jpg" data-title="Plano del sector — Radio de acción" style="background:var(--orange);color:var(--navy);padding:8px 16px;border-radius:7px;font-weight:700;text-decoration:none;white-space:nowrap;font-size:.82rem">Ver plano</a>
+      </div>
     </div>
   </div>
 </section>
@@ -547,6 +550,44 @@
     if(dp){ dp.prompt(); dp.userChoice.then(function(){ dp=null; btn.hidden=true; }); }
     else { alert('Instalar la app de la JAC San Diego Sur:\n\n• iPhone/iPad (Safari): toca Compartir y luego “Agregar a inicio”.\n• Android/Computador (Chrome): menú ⋮ → “Instalar app”.'); }
   }); }
+})();
+</script>
+
+<!-- Visor de documentos (interno) -->
+<div id="docModal" class="doc-modal" hidden>
+  <div class="doc-modal-bar">
+    <span id="docModalTitle">Documento</span>
+    <span class="doc-modal-actions">
+      <a id="docModalDl" href="#" target="_blank" rel="noopener">Abrir / Descargar &#8599;</a>
+      <button type="button" id="docModalClose" aria-label="Cerrar">&#10005; Cerrar</button>
+    </span>
+  </div>
+  <iframe id="docModalFrame" title="Documento" src="about:blank"></iframe>
+</div>
+<style>
+.doc-modal{position:fixed;inset:0;z-index:99999;background:rgba(10,18,38,.92);display:flex;flex-direction:column}
+.doc-modal[hidden]{display:none}
+.doc-modal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#1A2F5A;color:#fff;font-weight:700;font-size:.95rem}
+.doc-modal-actions{display:flex;align-items:center;gap:14px}
+.doc-modal-actions a{color:#F4A522;text-decoration:none;font-size:.85rem;font-weight:700}
+.doc-modal-actions a:hover{text-decoration:underline}
+.doc-modal-actions button{background:transparent;border:1px solid rgba(255,255,255,.45);color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:700}
+.doc-modal-actions button:hover{background:rgba(255,255,255,.15)}
+.doc-modal iframe{flex:1;width:100%;border:0;background:#fff}
+@media(max-width:600px){.doc-modal-bar{font-size:.8rem;padding:10px 12px}.doc-modal-actions{gap:8px}}
+</style>
+<script>
+(function(){
+  var m=document.getElementById('docModal'); if(!m) return;
+  var f=document.getElementById('docModalFrame'),t=document.getElementById('docModalTitle'),dl=document.getElementById('docModalDl');
+  function openDoc(src,title){ dl.href=src; t.textContent=title||'Documento'; f.src=src; m.hidden=false; document.body.style.overflow='hidden'; }
+  function closeDoc(){ m.hidden=true; f.src='about:blank'; document.body.style.overflow=''; }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-doc]');
+    if(a){ e.preventDefault(); openDoc(a.getAttribute('data-doc'), a.getAttribute('data-title')); return; }
+    if(e.target.closest('#docModalClose') || e.target===m){ closeDoc(); }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !m.hidden) closeDoc(); });
 })();
 </script>
 </body>
