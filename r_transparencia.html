@@ -311,10 +311,10 @@
 </section>
 <section class="block">
   <div class="sec-head"><div class="kicker" id="documentos" style="scroll-margin-top:120px">Marco legal</div><h2>Documentos oficiales</h2><p>La Junta de Acción Comunal San Diego Sur cuenta con personería jurídica reconocida por la Alcaldía de Medellín.</p></div>
-  <div class="doc-row"><div class="left"><div class="fic">📜</div><div><b style="color:var(--navy)">Resolución de reconocimiento de personería jurídica</b><div style="font-size:.82rem;color:var(--muted)">N° 202650084237 del 16 de octubre de 2026 · Alcaldía de Medellín</div></div></div><a class="dl" href="documentos/resolucion-reconocimiento-202650084237.pdf" target="_blank" rel="noopener">Ver documento</a></div>
-  <div class="doc-row"><div class="left"><div class="fic">📘</div><div><b style="color:var(--navy)">Estatutos de la Junta de Acción Comunal</b><div style="font-size:.82rem;color:var(--muted)">San Diego Sur · Comuna 10 La Candelaria</div></div></div><a class="dl" href="documentos/estatutos-jac-san-diego-sur.pdf" target="_blank" rel="noopener">Ver documento</a></div>
-  <div class="doc-row"><div class="left"><div class="fic">📙</div><div><b style="color:var(--navy)">ABC Comunal para la Participación</b><div style="font-size:.82rem;color:var(--muted)">Guía del Ministerio del Interior de Colombia</div></div></div><a class="dl" href="documentos/abc-comunal-participacion.pdf" target="_blank" rel="noopener">Ver documento</a></div>
-  <div class="doc-row"><div class="left"><div class="fic">🗺️</div><div><b style="color:var(--navy)">Plano del perímetro territorial</b><div style="font-size:.82rem;color:var(--muted)">Coordenadas oficiales · Depto. Administrativo de Planeación</div></div></div><a class="dl" href="documentos/plano-perimetro-coordenadas.pdf" target="_blank" rel="noopener">Ver plano</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">📜</div><div><b style="color:var(--navy)">Resolución de reconocimiento de personería jurídica</b><div style="font-size:.82rem;color:var(--muted)">N° 202650084237 del 16 de octubre de 2026 · Alcaldía de Medellín</div></div></div><a class="dl" href="documentos/resolucion-reconocimiento-202650084237.pdf" data-doc="documentos/resolucion-reconocimiento-202650084237.pdf" data-title="Resolución de reconocimiento 202650084237">Ver documento</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">📘</div><div><b style="color:var(--navy)">Estatutos de la Junta de Acción Comunal</b><div style="font-size:.82rem;color:var(--muted)">San Diego Sur · Comuna 10 La Candelaria</div></div></div><a class="dl" href="documentos/estatutos-jac-san-diego-sur.pdf" data-doc="documentos/estatutos-jac-san-diego-sur.pdf" data-title="Estatutos de la Junta de Acción Comunal">Ver documento</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">📙</div><div><b style="color:var(--navy)">ABC Comunal para la Participación</b><div style="font-size:.82rem;color:var(--muted)">Guía del Ministerio del Interior de Colombia</div></div></div><a class="dl" href="documentos/abc-comunal-participacion.pdf" data-doc="documentos/abc-comunal-participacion.pdf" data-title="ABC Comunal para la Participación">Ver documento</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">🗺️</div><div><b style="color:var(--navy)">Plano del perímetro territorial</b><div style="font-size:.82rem;color:var(--muted)">Coordenadas oficiales · Depto. Administrativo de Planeación</div></div></div><a class="dl" href="documentos/plano-perimetro-coordenadas.pdf" data-doc="documentos/plano-perimetro-coordenadas.pdf" data-title="Plano del perímetro territorial">Ver plano</a></div>
 </section>
 <section class="block" style="background:var(--mist)">
   <span class="ph-badge">Documentos pendientes de cargar</span>
@@ -446,4 +446,43 @@ document.querySelectorAll('.fcard').forEach(function(card){
   }); }
 })();
 </script>
+
+<!-- Visor de documentos (interno) -->
+<div id="docModal" class="doc-modal" hidden>
+  <div class="doc-modal-bar">
+    <span id="docModalTitle">Documento</span>
+    <span class="doc-modal-actions">
+      <a id="docModalDl" href="#" target="_blank" rel="noopener">Abrir / Descargar &#8599;</a>
+      <button type="button" id="docModalClose" aria-label="Cerrar">&#10005; Cerrar</button>
+    </span>
+  </div>
+  <iframe id="docModalFrame" title="Documento" src="about:blank"></iframe>
+</div>
+<style>
+.doc-modal{position:fixed;inset:0;z-index:99999;background:rgba(10,18,38,.92);display:flex;flex-direction:column}
+.doc-modal[hidden]{display:none}
+.doc-modal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#1A2F5A;color:#fff;font-weight:700;font-size:.95rem}
+.doc-modal-actions{display:flex;align-items:center;gap:14px}
+.doc-modal-actions a{color:#F4A522;text-decoration:none;font-size:.85rem;font-weight:700}
+.doc-modal-actions a:hover{text-decoration:underline}
+.doc-modal-actions button{background:transparent;border:1px solid rgba(255,255,255,.45);color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:700}
+.doc-modal-actions button:hover{background:rgba(255,255,255,.15)}
+.doc-modal iframe{flex:1;width:100%;border:0;background:#fff}
+@media(max-width:600px){.doc-modal-bar{font-size:.8rem;padding:10px 12px}.doc-modal-actions{gap:8px}}
+</style>
+<script>
+(function(){
+  var m=document.getElementById('docModal'); if(!m) return;
+  var f=document.getElementById('docModalFrame'),t=document.getElementById('docModalTitle'),dl=document.getElementById('docModalDl');
+  function openDoc(src,title){ dl.href=src; t.textContent=title||'Documento'; f.src=src; m.hidden=false; document.body.style.overflow='hidden'; }
+  function closeDoc(){ m.hidden=true; f.src='about:blank'; document.body.style.overflow=''; }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-doc]');
+    if(a){ e.preventDefault(); openDoc(a.getAttribute('data-doc'), a.getAttribute('data-title')); return; }
+    if(e.target.closest('#docModalClose') || e.target===m){ closeDoc(); }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !m.hidden) closeDoc(); });
+})();
+</script>
+
 </body></html>

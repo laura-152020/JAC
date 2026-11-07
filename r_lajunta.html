@@ -355,12 +355,12 @@
     <div class="mv-card" style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px">
       <div class="mv-ic" style="width:52px;height:52px;border-radius:14px;background:rgba(230,57,70,.1);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px">🤝</div>
       <h3 style="color:var(--red);margin-bottom:12px">Misión</h3>
-      <p style="color:#3a4453">Somos una organización comunitaria autónoma y sin ánimo de lucro que trabaja por el desarrollo integral de San Diego Sur. A través de nuestras cuatro comisiones gestionamos proyectos que garanticen un entorno seguro y sostenible, promuevan la inclusión de todos los grupos poblacionales, impulsen el bienestar mediante la salud, el deporte y la cultura, y abran caminos de formación y emprendimiento. Actuamos como puente transparente y participativo entre la comunidad y las instituciones.</p>
+      <p style="color:#3a4453">Representar y gestionar los intereses de la comunidad, promoviendo la participación ciudadana, el trabajo colectivo y proyectos que impulsen el desarrollo y la calidad de vida de sus habitantes.</p>
     </div>
     <div class="mv-card" style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px">
       <div class="mv-ic" style="width:52px;height:52px;border-radius:14px;background:rgba(43,169,224,.1);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px">🔭</div>
       <h3 style="color:var(--blue);margin-bottom:12px">Visión</h3>
-      <p style="color:#3a4453">Ser una Junta de Acción Comunal referente en el Distrito de Medellín, que consolide a San Diego Sur como un territorio seguro, limpio y con espacios públicos dignos. Nos proyectamos como una comunidad unida, saludable y participativa, donde ningún vecino se sienta ajeno a las decisiones que afectan su sector, y donde la organización comunitaria sea el motor de nuestra calidad de vida.</p>
+      <p style="color:#3a4453">Ser una organización comunal líder, participativa y transparente, comprometida con el progreso, la unión y el bienestar integral de sus habitantes.</p>
     </div>
   </div>
   <div style="margin-top:40px">
@@ -392,13 +392,14 @@
         <p>Trabajamos hoy por el San Diego Sur que queremos ver mañana.</p>
       </div>
     </div>
+    <div style="text-align:center;margin-top:34px"><button type="button" class="vermas-btn" data-identidad>Ver versión completa (visión, misión, valores y objetivos) &#8594;</button></div>
   </div>
 </section>
 <section class="block">
   <div class="sec-head"><div class="kicker">Normatividad</div><h2>Estatutos y marco legal</h2><p>Documentos que rigen el funcionamiento de la Junta.</p></div>
-  <div class="doc-row"><div class="left"><div class="fic">📄</div><div><b style="color:var(--navy)">Estatutos de la Junta</b><div style="font-size:.82rem;color:var(--muted)">Reglamento interno · Artículo 61: comisiones de trabajo</div></div></div><a class="dl" href="#">Descargar</a></div>
-  <div class="doc-row"><div class="left"><div class="fic">⚖️</div><div><b style="color:var(--navy)">Ley 2166 de 2021</b><div style="font-size:.82rem;color:var(--muted)">Marco legal de la acción comunal en Colombia</div></div></div><a class="dl" href="#">Descargar</a></div>
-  <div class="doc-row"><div class="left"><div class="fic">🗺️</div><div><b style="color:var(--navy)">Constancia de territorio</b><div style="font-size:.82rem;color:var(--muted)">Alcaldía de Medellín · Secretaría de Participación Ciudadana</div></div></div><a class="dl" href="#">Descargar</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">📄</div><div><b style="color:var(--navy)">Estatutos de la Junta</b><div style="font-size:.82rem;color:var(--muted)">Reglamento interno · San Diego Sur</div></div></div><a class="dl" href="documentos/estatutos-jac-san-diego-sur.pdf" data-doc="documentos/estatutos-jac-san-diego-sur.pdf" data-title="Estatutos de la Junta de Acción Comunal">Ver documento</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">⚖️</div><div><b style="color:var(--navy)">Ley 2166 de 2021</b><div style="font-size:.82rem;color:var(--muted)">Marco legal de la acción comunal en Colombia</div></div></div><a class="dl" href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=184758" target="_blank" rel="noopener">Sitio oficial &#8599;</a></div>
+  <div class="doc-row"><div class="left"><div class="fic">🗺️</div><div><b style="color:var(--navy)">Constancia de territorio</b><div style="font-size:.82rem;color:var(--muted)">Alcaldía de Medellín · Plano del perímetro</div></div></div><a class="dl" href="documentos/plano-perimetro-coordenadas.pdf" data-doc="documentos/plano-perimetro-coordenadas.pdf" data-title="Constancia de territorio — Plano del perímetro">Ver documento</a></div>
 </section>
 <footer>
   <div class="foot">
@@ -482,4 +483,113 @@
   }); }
 })();
 </script>
+
+<!-- Visor de documentos (interno) -->
+<div id="docModal" class="doc-modal" hidden>
+  <div class="doc-modal-bar">
+    <span id="docModalTitle">Documento</span>
+    <span class="doc-modal-actions">
+      <a id="docModalDl" href="#" target="_blank" rel="noopener">Abrir / Descargar &#8599;</a>
+      <button type="button" id="docModalClose" aria-label="Cerrar">&#10005; Cerrar</button>
+    </span>
+  </div>
+  <iframe id="docModalFrame" title="Documento" src="about:blank"></iframe>
+</div>
+<style>
+.doc-modal{position:fixed;inset:0;z-index:99999;background:rgba(10,18,38,.92);display:flex;flex-direction:column}
+.doc-modal[hidden]{display:none}
+.doc-modal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#1A2F5A;color:#fff;font-weight:700;font-size:.95rem}
+.doc-modal-actions{display:flex;align-items:center;gap:14px}
+.doc-modal-actions a{color:#F4A522;text-decoration:none;font-size:.85rem;font-weight:700}
+.doc-modal-actions a:hover{text-decoration:underline}
+.doc-modal-actions button{background:transparent;border:1px solid rgba(255,255,255,.45);color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:700}
+.doc-modal-actions button:hover{background:rgba(255,255,255,.15)}
+.doc-modal iframe{flex:1;width:100%;border:0;background:#fff}
+@media(max-width:600px){.doc-modal-bar{font-size:.8rem;padding:10px 12px}.doc-modal-actions{gap:8px}}
+</style>
+<script>
+(function(){
+  var m=document.getElementById('docModal'); if(!m) return;
+  var f=document.getElementById('docModalFrame'),t=document.getElementById('docModalTitle'),dl=document.getElementById('docModalDl');
+  function openDoc(src,title){ dl.href=src; t.textContent=title||'Documento'; f.src=src; m.hidden=false; document.body.style.overflow='hidden'; }
+  function closeDoc(){ m.hidden=true; f.src='about:blank'; document.body.style.overflow=''; }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-doc]');
+    if(a){ e.preventDefault(); openDoc(a.getAttribute('data-doc'), a.getAttribute('data-title')); return; }
+    if(e.target.closest('#docModalClose') || e.target===m){ closeDoc(); }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !m.hidden) closeDoc(); });
+})();
+</script>
+
+
+<style>
+.vermas-btn{background:#1A2F5A;color:#fff;border:none;padding:13px 26px;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:transform .2s,filter .2s}
+.vermas-btn:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.id-modal{position:fixed;inset:0;z-index:99999;background:rgba(10,18,38,.6);display:flex;align-items:center;justify-content:center;padding:20px}
+.id-modal[hidden]{display:none}
+.id-box{background:#fff;max-width:760px;width:100%;max-height:88vh;overflow-y:auto;border-radius:18px;padding:40px 38px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.id-box h2{color:#1A2F5A;font-size:1.7rem;margin-bottom:6px}
+.id-box .idk{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#F4A522;font-weight:700;margin-bottom:8px}
+.id-box h3{color:#1A2F5A;margin:26px 0 8px;font-size:1.12rem;border-left:4px solid #F4A522;padding-left:12px}
+.id-box p{color:#3a4453;line-height:1.6;margin-bottom:8px}
+.id-box ul,.id-box ol{color:#3a4453;line-height:1.6;padding-left:22px;margin-top:6px}
+.id-box li{margin-bottom:8px}
+.id-box li b{color:#1A2F5A}
+.id-x{position:absolute;top:16px;right:16px;background:#f3f5f9;border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;color:#1A2F5A}
+.id-x:hover{background:#e6eaf1}
+@media(max-width:600px){.id-box{padding:30px 22px}}
+</style>
+<div id="idModal" class="id-modal" hidden>
+  <div class="id-box">
+    <button type="button" id="idClose" class="id-x" aria-label="Cerrar">&#10005;</button>
+    <div class="idk">Nuestra identidad</div>
+    <h2>Visi&oacute;n, misi&oacute;n y valores</h2>
+    <h3>Visi&oacute;n</h3>
+    <p>Ser una Junta de Acci&oacute;n Comunal l&iacute;der, participativa, transparente y comprometida con el desarrollo integral de la comunidad, reconocida por promover la uni&oacute;n, la convivencia, la participaci&oacute;n ciudadana y la gesti&oacute;n de proyectos que contribuyan al bienestar y mejoramiento de la calidad de vida de sus habitantes.</p>
+    <h3>Misi&oacute;n</h3>
+    <p>Representar y trabajar por los intereses de la comunidad mediante la participaci&oacute;n activa de sus habitantes, promoviendo la organizaci&oacute;n comunitaria, la gesti&oacute;n de recursos, la ejecuci&oacute;n de proyectos sociales y el fortalecimiento de la convivencia, con principios de transparencia, solidaridad, democracia y compromiso colectivo.</p>
+    <h3>Valores institucionales</h3>
+    <ul>
+      <li><b>Transparencia</b> &mdash; Actuar con honestidad, claridad y responsabilidad en la administraci&oacute;n de los recursos y la toma de decisiones.</li>
+      <li><b>Participaci&oacute;n</b> &mdash; Fomentar la intervenci&oacute;n activa de los afiliados y habitantes en las decisiones y actividades comunitarias.</li>
+      <li><b>Solidaridad</b> &mdash; Promover el apoyo mutuo, la cooperaci&oacute;n y el trabajo colectivo para beneficio de toda la comunidad.</li>
+      <li><b>Responsabilidad</b> &mdash; Cumplir los compromisos y funciones adquiridas, procurando siempre el bienestar com&uacute;n.</li>
+      <li><b>Democracia</b> &mdash; Garantizar decisiones participativas, respetando las opiniones y los derechos de los integrantes de la comunidad.</li>
+      <li><b>Respeto</b> &mdash; Reconocer la dignidad, las diferencias y los derechos de todas las personas.</li>
+      <li><b>Compromiso</b> &mdash; Trabajar con dedicaci&oacute;n y sentido de pertenencia por el desarrollo y progreso de la comunidad.</li>
+      <li><b>Equidad</b> &mdash; Promover la igualdad de oportunidades y el acceso justo a los beneficios y proyectos comunitarios.</li>
+      <li><b>Convivencia</b> &mdash; Fortalecer las relaciones comunitarias mediante el di&aacute;logo, la tolerancia y la resoluci&oacute;n pac&iacute;fica de conflictos.</li>
+      <li><b>Trabajo en equipo</b> &mdash; Impulsar la colaboraci&oacute;n entre directivos, afiliados, instituciones y habitantes para alcanzar objetivos comunes.</li>
+    </ul>
+    <h3>Objetivo general</h3>
+    <p>Fortalecer el desarrollo social, comunitario y participativo del territorio mediante la organizaci&oacute;n de sus habitantes, la gesti&oacute;n de iniciativas y proyectos, la defensa de los intereses colectivos y la promoci&oacute;n de espacios de participaci&oacute;n democr&aacute;tica que contribuyan al bienestar y la calidad de vida de la comunidad.</p>
+    <h3>Objetivos espec&iacute;ficos</h3>
+    <ol>
+      <li><b>Fortalecimiento comunitario:</b> promover la integraci&oacute;n, organizaci&oacute;n y participaci&oacute;n activa de los habitantes en los procesos de desarrollo comunitario.</li>
+      <li><b>Gesti&oacute;n de proyectos:</b> identificar, formular y gestionar proyectos sociales, culturales, ambientales y de infraestructura que respondan a las necesidades de la comunidad.</li>
+      <li><b>Representaci&oacute;n comunitaria:</b> representar los intereses y necesidades de la comunidad ante entidades p&uacute;blicas, privadas e instituciones gubernamentales.</li>
+      <li><b>Transparencia administrativa:</b> garantizar una gesti&oacute;n responsable, organizada y transparente de los recursos, bienes y actividades de la Junta.</li>
+      <li><b>Convivencia ciudadana:</b> fomentar la sana convivencia, el respeto, la solidaridad y la resoluci&oacute;n pac&iacute;fica de conflictos entre los habitantes.</li>
+      <li><b>Participaci&oacute;n democr&aacute;tica:</b> garantizar espacios de di&aacute;logo, deliberaci&oacute;n y toma de decisiones con participaci&oacute;n de los afiliados.</li>
+      <li><b>Desarrollo social:</b> impulsar actividades que favorezcan la educaci&oacute;n, la cultura, el deporte, la recreaci&oacute;n y el bienestar de los diferentes grupos poblacionales.</li>
+      <li><b>Protecci&oacute;n ambiental:</b> promover iniciativas de conservaci&oacute;n, recuperaci&oacute;n y cuidado del medio ambiente y los espacios comunitarios.</li>
+      <li><b>Articulaci&oacute;n institucional:</b> establecer alianzas y mecanismos de cooperaci&oacute;n con entidades p&uacute;blicas, privadas y organizaciones sociales para impulsar el desarrollo del territorio.</li>
+    </ol>
+    <p style="font-size:.82rem;color:#8a93a6;margin-top:22px">Redacci&oacute;n institucional base, armonizada con los estatutos aprobados y la Ley 2166 de 2021.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var m=document.getElementById('idModal'); if(!m) return;
+  function o(){ m.hidden=false; document.body.style.overflow='hidden'; }
+  function c(){ m.hidden=true; document.body.style.overflow=''; }
+  document.addEventListener('click',function(e){
+    if(e.target.closest('[data-identidad]')){ e.preventDefault(); o(); return; }
+    if(e.target.closest('#idClose') || e.target===m){ c(); }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !m.hidden) c(); });
+})();
+</script>
+
 </body></html>
